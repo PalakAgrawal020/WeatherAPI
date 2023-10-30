@@ -15,7 +15,18 @@ btn.addEventListener('click', (event) => {
     input.value = '';
 });
 
+const loader = document.querySelector('#loading');
+
+function displayLoading() {
+    loader.classList.add("display");
+}
+
+function hideLoading() {
+    loader.classList.remove("display");
+}
+
 function displayWeather(location) {
+    displayLoading();
     fetch('https://api.weatherapi.com/v1/current.json?key=e6ec4929a0fc40c7845161348232810&q=' + location)
     .then((response) => {
         if (!response.ok) {
@@ -24,6 +35,7 @@ function displayWeather(location) {
         return response.json();
     })
     .then((data) => {
+        hideLoading();
         console.log(data);
         condition = data.current.condition.text;
         icon = data.current.condition.icon;
